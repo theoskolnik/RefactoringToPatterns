@@ -13,28 +13,13 @@ class Customer extends DomainObject {
     }
 
     public String statement() {
-        double totalAmount = 0;
         int frequentRenterPoints = 0;
+        double totalAmount = 0;
         String result = "Rental Record for " + name() + "\n";
         for (Rental each : rentals) {
             double thisAmount = 0;
             //determine amounts for each line
-            switch (each.tape().movie().priceCode()) {
-                case Movie.REGULAR:
-                    thisAmount += 2;
-                    if (each.daysRented() > 2)
-                        thisAmount += (each.daysRented() - 2) * 1.5;
-                    break;
-                case Movie.NEW_RELEASE:
-                    thisAmount += each.daysRented() * 3;
-                    break;
-                case Movie.CHILDRENS:
-                    thisAmount += 1.5;
-                    if (each.daysRented() > 3)
-                        thisAmount += (each.daysRented() - 3) * 1.5;
-                    break;
-
-            }
+            thisAmount = calculateAmountOwed(each, thisAmount);
             totalAmount += thisAmount;
 
             // add frequent renter points
@@ -51,6 +36,26 @@ class Customer extends DomainObject {
         result += "You earned " + String.valueOf(frequentRenterPoints) + " frequent renter points";
         return result;
 
+    }
+
+    private double calculateAmountOwed(Rental each, double thisAmount) {
+        switch (each.tape().movie().priceCode()) {
+            case Movie.REGULAR:
+                thisAmount += 2;
+                if (each.daysRented() > 2)
+                    thisAmount += (each.daysRented() - 2) * 1.5;
+                break;
+            case Movie.NEW_RELEASE:
+                thisAmount += each.daysRented() * 3;
+                break;
+            case Movie.CHILDRENS:
+                thisAmount += 1.5;
+                if (each.daysRented() > 3)
+                    thisAmount += (each.daysRented() - 3) * 1.5;
+                break;
+
+        }
+        return thisAmount;
     }
 
     public void addRental(Rental arg) {
