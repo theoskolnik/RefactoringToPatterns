@@ -15,11 +15,11 @@ public class CustomerTest {
         Customer customer = new Customer("Bill");
         Rental rental = mock(Rental.class);
         Tape tape = mock(Tape.class);
-        Movie movie = mock(Movie.class);
+        RegularMovie movie = mock(RegularMovie.class);
 
         when(rental.tape()).thenReturn(tape);
         when(tape.movie()).thenReturn(movie);
-        when(movie.priceCode()).thenReturn(Movie.NEW_RELEASE);
+        when(movie.priceCode()).thenReturn(RegularMovie.NEW_RELEASE);
         when(rental.daysRented()).thenReturn(1);
 
         customer.addRental(rental);
@@ -32,11 +32,11 @@ public class CustomerTest {
         Customer customer = new Customer("Bill");
         Rental rental = mock(Rental.class);
         Tape tape = mock(Tape.class);
-        Movie movie = mock(Movie.class);
+        RegularMovie movie = mock(RegularMovie.class);
 
         when(rental.tape()).thenReturn(tape);
         when(tape.movie()).thenReturn(movie);
-        when(movie.priceCode()).thenReturn(Movie.REGULAR);
+        when(movie.priceCode()).thenReturn(RegularMovie.REGULAR);
         when(rental.daysRented()).thenReturn(1);
 
         customer.addRental(rental);
@@ -49,11 +49,11 @@ public class CustomerTest {
         Customer customer = new Customer("Bill");
         Rental rental = mock(Rental.class);
         Tape tape = mock(Tape.class);
-        Movie movie = mock(Movie.class);
+        RegularMovie movie = mock(RegularMovie.class);
 
         when(rental.tape()).thenReturn(tape);
         when(tape.movie()).thenReturn(movie);
-        when(movie.priceCode()).thenReturn(Movie.REGULAR);
+        when(movie.priceCode()).thenReturn(RegularMovie.REGULAR);
         when(rental.daysRented()).thenReturn(3);
 
         customer.addRental(rental);
@@ -67,11 +67,11 @@ public class CustomerTest {
         Customer customer = new Customer("Bill");
         Rental rental = mock(Rental.class);
         Tape tape = mock(Tape.class);
-        Movie movie = mock(Movie.class);
+        RegularMovie movie = mock(RegularMovie.class);
 
         when(rental.tape()).thenReturn(tape);
         when(tape.movie()).thenReturn(movie);
-        when(movie.priceCode()).thenReturn(Movie.CHILDRENS);
+        when(movie.priceCode()).thenReturn(RegularMovie.CHILDRENS);
         when(rental.daysRented()).thenReturn(1);
 
         customer.addRental(rental);
@@ -84,11 +84,11 @@ public class CustomerTest {
         Customer customer = new Customer("Bill");
         Rental rental = mock(Rental.class);
         Tape tape = mock(Tape.class);
-        Movie movie = mock(Movie.class);
+        RegularMovie movie = mock(RegularMovie.class);
 
         when(rental.tape()).thenReturn(tape);
         when(tape.movie()).thenReturn(movie);
-        when(movie.priceCode()).thenReturn(Movie.CHILDRENS);
+        when(movie.priceCode()).thenReturn(RegularMovie.CHILDRENS);
         when(rental.daysRented()).thenReturn(4);
 
         customer.addRental(rental);

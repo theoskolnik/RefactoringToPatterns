@@ -38,20 +38,20 @@ class Customer extends DomainObject {
 
     }
 
-    private double calculateAmountOwed(Rental each, double thisAmount) {
-        switch (each.tape().movie().priceCode()) {
+    private double calculateAmountOwed(Rental rental, double thisAmount) {
+        switch (rental.tape().movie().priceCode()) {
             case Movie.REGULAR:
                 thisAmount += 2;
-                if (each.daysRented() > 2)
-                    thisAmount += (each.daysRented() - 2) * 1.5;
+                if (rental.daysRented() > 2)
+                    thisAmount += (rental.daysRented() - 2) * 1.5;
                 break;
             case Movie.NEW_RELEASE:
-                thisAmount += each.daysRented() * 3;
+                thisAmount += rental.daysRented() * 3;
                 break;
             case Movie.CHILDRENS:
                 thisAmount += 1.5;
-                if (each.daysRented() > 3)
-                    thisAmount += (each.daysRented() - 3) * 1.5;
+                if (rental.daysRented() > 3)
+                    thisAmount += (rental.daysRented() - 3) * 1.5;
                 break;
 
         }
