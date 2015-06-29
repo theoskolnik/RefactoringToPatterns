@@ -6,45 +6,45 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Customer extends DomainObject {
+    private final String result;
     private List<Rental> rentals = new ArrayList<Rental>();
 
     public Customer(String name) {
         this.name = name;
+        this.result = printStatement();
     }
 
-    public String statement() {
+    public String printStatement() {
+        return statement();
+    }
+
+    private String statement() {
         int frequentRenterPoints = 1;
         double totalAmount = 0;
-        String result = "Rental Record for " + name() + "\n";
+        StringBuilder sb = new StringBuilder();
+        sb.append("Rental Record for " + name() + "\n");
+
         for (Rental rental : rentals) {
-            //determine amounts for each line
-            double thisAmount = getRentalRate(rental);
-            totalAmount += thisAmount;
-
-            // add frequent renter points
+            totalAmount += getRentalRate(rental);
             frequentRenterPoints = addBonusFrequentRenterPoints(frequentRenterPoints, rental);
-
-
-            //show figures for this rental
-            result += "\t" + rental.tape().movie().name() + "\t" + String.valueOf(thisAmount) + "\n";
-
+            sb.append("\t" + rental.tape().movie().name() + "\t" + String.valueOf(getRentalRate(rental)) + "\n");
         }
-        //add footer lines
-        result += "Amount owed is " + String.valueOf(totalAmount) + "\n";
-        result += "You earned " + String.valueOf(frequentRenterPoints) + " frequent renter points";
-        return result;
+
+        sb.append("Amount owed is " + String.valueOf(totalAmount) + "\n");
+        sb.append("You earned " + String.valueOf(frequentRenterPoints) + " frequent renter points");
+        return sb.toString();
 
     }
 
     private int addBonusFrequentRenterPoints(int frequentRenterPoints, Rental rental) {
-        // add bonus for a two day new release rental
         if ((rental.tape().movie().priceCode() == Movie.NEW_RELEASE) && rental.daysRented() > 1) frequentRenterPoints++;
         return frequentRenterPoints;
     }
 
     private double getRentalRate(Rental rental) {
         double thisAmount = 0;
-        Movie movie = rental.tape().movie();
+        Movie movie;
+        movie = rental.tape().movie();
         thisAmount += movie.getExtraCharge();
         if (rental.daysRented() > movie.getRentalLimit()) {
             thisAmount += (rental.daysRented() - movie.getRentalLimit()) * movie.getMultiplier();

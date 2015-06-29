@@ -7,6 +7,6 @@ public class Main {
         customer.addRental(new Rental(new Tape("2345", new NewReleaseMovie("Usual Suspects")), 3));
         customer.addRental(new Rental(new Tape("3456", new ChildrensMovie("American Beauty")), 2));
 
-        System.out.println(customer.statement());
+        System.out.println(customer.printStatement());
     }
 }

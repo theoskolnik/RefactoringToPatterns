@@ -16,7 +16,7 @@ public class CustomerTest {
 
         customer.addRental(rental);
 
-        assertThat(customer.statement(), containsString("Amount owed is 3"));
+        assertThat(customer.printStatement(), containsString("Amount owed is 3"));
     }
 
     @Test
@@ -28,7 +28,7 @@ public class CustomerTest {
 
         customer.addRental(rental);
 
-        assertThat(customer.statement(), containsString("Amount owed is 2"));
+        assertThat(customer.printStatement(), containsString("Amount owed is 2"));
     }
 
     @Test
@@ -41,8 +41,8 @@ public class CustomerTest {
 
         customer.addRental(rental);
 
-        assertThat(customer.statement(), containsString("Amount owed is 3.5"));
-        assertThat(customer.statement(), containsString("1 frequent renter points"));
+        assertThat(customer.printStatement(), containsString("Amount owed is 3.5"));
+        assertThat(customer.printStatement(), containsString("1 frequent renter points"));
     }
 
     @Test
@@ -54,7 +54,7 @@ public class CustomerTest {
 
         customer.addRental(rental);
 
-        assertThat(customer.statement(), containsString("Amount owed is 1.5"));
+        assertThat(customer.printStatement(), containsString("Amount owed is 1.5"));
     }
 
     @Test
@@ -66,8 +66,8 @@ public class CustomerTest {
 
         customer.addRental(rental);
 
-        assertThat(customer.statement(), containsString("Amount owed is 3"));
-        assertThat(customer.statement(), containsString("1 frequent renter points"));
+        assertThat(customer.printStatement(), containsString("Amount owed is 3"));
+        assertThat(customer.printStatement(), containsString("1 frequent renter points"));
 
     }
 
