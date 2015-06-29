@@ -1,26 +1,18 @@
 package exercise;
 
-
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class CustomerTest {
 
     @Test
     public void givenANewReleaseForOneDay_shouldCharge3Dollars(){
         Customer customer = new Customer("Bill");
-        Rental rental = mock(Rental.class);
-        Tape tape = mock(Tape.class);
-        RegularMovie movie = mock(RegularMovie.class);
-
-        when(rental.tape()).thenReturn(tape);
-        when(tape.movie()).thenReturn(movie);
-        when(movie.priceCode()).thenReturn(RegularMovie.NEW_RELEASE);
-        when(rental.daysRented()).thenReturn(1);
+        Movie interstellar = new NewReleaseMovie("Interstellar");
+        Tape tape = new Tape("1234", interstellar);
+        Rental rental = new Rental(tape, 1);
 
         customer.addRental(rental);
 
@@ -30,14 +22,9 @@ public class CustomerTest {
     @Test
     public void givenARegularForOneDay_shouldCharge2Dollars(){
         Customer customer = new Customer("Bill");
-        Rental rental = mock(Rental.class);
-        Tape tape = mock(Tape.class);
-        RegularMovie movie = mock(RegularMovie.class);
-
-        when(rental.tape()).thenReturn(tape);
-        when(tape.movie()).thenReturn(movie);
-        when(movie.priceCode()).thenReturn(RegularMovie.REGULAR);
-        when(rental.daysRented()).thenReturn(1);
+        Movie gravity = new RegularMovie("Gravity");
+        Tape tape = new Tape("5678", gravity);
+        Rental rental = new Rental(tape, 1);
 
         customer.addRental(rental);
 
@@ -47,14 +34,10 @@ public class CustomerTest {
     @Test
     public void givenARegularForThreeDays_shouldCharge3andHalfDollars(){
         Customer customer = new Customer("Bill");
-        Rental rental = mock(Rental.class);
-        Tape tape = mock(Tape.class);
-        RegularMovie movie = mock(RegularMovie.class);
+        Movie gravity = new RegularMovie("Gravity");
+        Tape tape = new Tape("5678", gravity);
+        Rental rental = new Rental(tape, 3);
 
-        when(rental.tape()).thenReturn(tape);
-        when(tape.movie()).thenReturn(movie);
-        when(movie.priceCode()).thenReturn(RegularMovie.REGULAR);
-        when(rental.daysRented()).thenReturn(3);
 
         customer.addRental(rental);
 
@@ -65,14 +48,9 @@ public class CustomerTest {
     @Test
     public void givenAChildrensForOneDay_shouldCharge1andHalfDollars(){
         Customer customer = new Customer("Bill");
-        Rental rental = mock(Rental.class);
-        Tape tape = mock(Tape.class);
-        RegularMovie movie = mock(RegularMovie.class);
-
-        when(rental.tape()).thenReturn(tape);
-        when(tape.movie()).thenReturn(movie);
-        when(movie.priceCode()).thenReturn(RegularMovie.CHILDRENS);
-        when(rental.daysRented()).thenReturn(1);
+        Movie totoro = new ChildrensMovie("Totoro");
+        Tape tape = new Tape("1111", totoro);
+        Rental rental = new Rental(tape, 1);
 
         customer.addRental(rental);
 
@@ -82,14 +60,9 @@ public class CustomerTest {
     @Test
     public void givenAChildrensForFourDays_shouldCharge3Dollars(){
         Customer customer = new Customer("Bill");
-        Rental rental = mock(Rental.class);
-        Tape tape = mock(Tape.class);
-        RegularMovie movie = mock(RegularMovie.class);
-
-        when(rental.tape()).thenReturn(tape);
-        when(tape.movie()).thenReturn(movie);
-        when(movie.priceCode()).thenReturn(RegularMovie.CHILDRENS);
-        when(rental.daysRented()).thenReturn(4);
+        Movie totoro = new ChildrensMovie("Totoro");
+        Tape tape = new Tape("1111", totoro);
+        Rental rental = new Rental(tape, 4);
 
         customer.addRental(rental);
 

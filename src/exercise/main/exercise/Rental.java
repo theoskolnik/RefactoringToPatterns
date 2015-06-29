@@ -19,5 +19,6 @@ class Rental extends DomainObject {
     public Tape tape() {
         return tape;
     }
+
 }
 

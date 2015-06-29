@@ -13,4 +13,10 @@ public interface Movie {
     void persist();
 
     String name();
+
+    int getRentalLimit();
+
+    double getExtraCharge();
+
+    double getMultiplier();
 }

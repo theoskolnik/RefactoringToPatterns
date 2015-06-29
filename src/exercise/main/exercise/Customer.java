@@ -13,22 +13,20 @@ class Customer extends DomainObject {
     }
 
     public String statement() {
-        int frequentRenterPoints = 0;
+        int frequentRenterPoints = 1;
         double totalAmount = 0;
         String result = "Rental Record for " + name() + "\n";
-        for (Rental each : rentals) {
-            double thisAmount = 0;
+        for (Rental rental : rentals) {
             //determine amounts for each line
-            thisAmount = calculateAmountOwed(each, thisAmount);
+            double thisAmount = getRentalRate(rental);
             totalAmount += thisAmount;
 
             // add frequent renter points
-            frequentRenterPoints++;
-            // add bonus for a two day new release rental
-            if ((each.tape().movie().priceCode() == Movie.NEW_RELEASE) && each.daysRented() > 1) frequentRenterPoints++;
+            frequentRenterPoints = addBonusFrequentRenterPoints(frequentRenterPoints, rental);
+
 
             //show figures for this rental
-            result += "\t" + each.tape().movie().name() + "\t" + String.valueOf(thisAmount) + "\n";
+            result += "\t" + rental.tape().movie().name() + "\t" + String.valueOf(thisAmount) + "\n";
 
         }
         //add footer lines
@@ -38,21 +36,18 @@ class Customer extends DomainObject {
 
     }
 
-    private double calculateAmountOwed(Rental rental, double thisAmount) {
-        switch (rental.tape().movie().priceCode()) {
-            case Movie.REGULAR:
-                thisAmount += 2;
-                if (rental.daysRented() > 2)
-                    thisAmount += (rental.daysRented() - 2) * 1.5;
-                break;
-            case Movie.NEW_RELEASE:
-                thisAmount += rental.daysRented() * 3;
-                break;
-            case Movie.CHILDRENS:
-                thisAmount += 1.5;
-                if (rental.daysRented() > 3)
-                    thisAmount += (rental.daysRented() - 3) * 1.5;
-                break;
+    private int addBonusFrequentRenterPoints(int frequentRenterPoints, Rental rental) {
+        // add bonus for a two day new release rental
+        if ((rental.tape().movie().priceCode() == Movie.NEW_RELEASE) && rental.daysRented() > 1) frequentRenterPoints++;
+        return frequentRenterPoints;
+    }
+
+    private double getRentalRate(Rental rental) {
+        double thisAmount = 0;
+        Movie movie = rental.tape().movie();
+        thisAmount += movie.getExtraCharge();
+        if (rental.daysRented() > movie.getRentalLimit()) {
+            thisAmount += (rental.daysRented() - movie.getRentalLimit()) * movie.getMultiplier();
 
         }
         return thisAmount;
