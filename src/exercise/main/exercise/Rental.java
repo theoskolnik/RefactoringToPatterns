@@ -20,5 +20,18 @@ class Rental extends DomainObject {
         return tape;
     }
 
+    public double getRentalRate() {
+        return rentalRateCalculator();
+    }
+
+    private double rentalRateCalculator() {
+        double rentalTotal = 0;
+        rentalTotal += this.tape().movie().getExtraCharge();
+        if (this.daysRented() > this.tape().movie().getRentalLimit()) {
+            rentalTotal += (this.daysRented() - this.tape().movie().getRentalLimit()) * this.tape().movie().getMultiplier();
+
+        }
+        return rentalTotal;
+    }
 }
 

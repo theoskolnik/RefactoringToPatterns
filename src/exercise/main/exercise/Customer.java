@@ -25,32 +25,19 @@ class Customer extends DomainObject {
         sb.append("Rental Record for " + name() + "\n");
 
         for (Rental rental : rentals) {
-            totalAmount += getRentalRate(rental);
+            totalAmount += rental.getRentalRate();
             frequentRenterPoints = addBonusFrequentRenterPoints(frequentRenterPoints, rental);
-            sb.append("\t" + rental.tape().movie().name() + "\t" + String.valueOf(getRentalRate(rental)) + "\n");
+            sb.append("\t" + rental.tape().movie().name() + "\t" + String.valueOf(rental.getRentalRate()) + "\n");
         }
 
         sb.append("Amount owed is " + String.valueOf(totalAmount) + "\n");
         sb.append("You earned " + String.valueOf(frequentRenterPoints) + " frequent renter points");
         return sb.toString();
-
     }
 
     private int addBonusFrequentRenterPoints(int frequentRenterPoints, Rental rental) {
         if ((rental.tape().movie().priceCode() == Movie.NEW_RELEASE) && rental.daysRented() > 1) frequentRenterPoints++;
         return frequentRenterPoints;
-    }
-
-    private double getRentalRate(Rental rental) {
-        double thisAmount = 0;
-        Movie movie;
-        movie = rental.tape().movie();
-        thisAmount += movie.getExtraCharge();
-        if (rental.daysRented() > movie.getRentalLimit()) {
-            thisAmount += (rental.daysRented() - movie.getRentalLimit()) * movie.getMultiplier();
-
-        }
-        return thisAmount;
     }
 
     public void addRental(Rental arg) {
